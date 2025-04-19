@@ -68,7 +68,33 @@ O sistema utiliza a API da OpenAI para:
 Este módulo representa uma inovação significativa na gestão de riscos em clínicas odontológicas, permitindo a tomada de decisões proativas para mitigar problemas antes que escalem.
 
 ## 📂 Estrutura do Projeto
-📦 odonto-care ├── 📁 src │ └── 📁 main │ ├── 📁 java │ │ └── 📁 com.fiap.odontocare │ │ ├── 📁 actuator # Configurações de métricas e health checks │ │ ├── 📁 config # Configurações do Spring (segurança, i18n, etc.) │ │ ├── 📁 controller # Controladores REST e Web │ │ ├── 📁 dto # Objetos de Transferência de Dados │ │ ├── 📁 entity # Entidades JPA │ │ ├── 📁 exception # Manipulação de erros personalizados │ │ ├── 📁 repository # Interfaces JPA │ │ └── 📁 service # Lógica de negócio │ └── 📁 resources │ ├── 📁 static # Recursos estáticos (CSS, JS, imagens) │ ├── 📁 templates │ │ ├── 📁 fragments # Fragments Thymeleaf reutilizáveis │ │ ├── 📁 ia # Páginas do módulo de IA │ │ └── 📁 pacientes # Páginas de gestão de pacientes │ ├── 📄 application.properties # Configurações da aplicação │ ├── 📄 messages.properties # Mensagens padrão │ ├── 📄 messages_pt_BR.properties # Mensagens em português │ └── 📄 messages_en.properties # Mensagens em inglês ├── 📄 pom.xml # Configuração do Maven └── 📄 README.md # Documentação do projeto
+
+odonto-care
+├── src
+│   └── main
+│       ├── java
+│       │   └── com.fiap.odontocare
+│       │       ├── actuator        - Configurações de métricas e health checks
+│       │       ├── config          - Configurações do Spring (segurança, i18n, etc.)
+│       │       ├── controller      - Controladores REST e Web
+│       │       ├── dto             - Objetos de Transferência de Dados
+│       │       ├── entity          - Entidades JPA
+│       │       ├── exception       - Manipulação de erros personalizados
+│       │       ├── repository      - Interfaces JPA
+│       │       └── service         - Lógica de negócio
+│       └── resources
+│           ├── static             - Recursos estáticos (CSS, JS, imagens)
+│           ├── templates
+│           │   ├── fragments      - Fragments Thymeleaf reutilizáveis
+│           │   ├── ia             - Páginas do módulo de IA
+│           │   └── pacientes      - Páginas de gestão de pacientes
+│           ├── application.properties            - Configurações da aplicação
+│           ├── messages.properties               - Mensagens padrão
+│           ├── messages_pt_BR.properties         - Mensagens em português
+│           └── messages_en.properties            - Mensagens em inglês
+├── pom.xml                    - Configuração do Maven
+└── README.md                  - Documentação do projeto
+
 
 ## 📡 Endpoints
 
@@ -100,7 +126,6 @@ Este módulo representa uma inovação significativa na gestão de riscos em cl�
 
 ###  **tela de Login**  
 ![Login](https://github.com/bia98silva/OdontoCare_sprint4/blob/main/img/Login.png)
-•	http://localhost:8080/login 
 
 ### 📊 **Dashboard Principal**   
 Dashboard principal com indicadores da clínica
