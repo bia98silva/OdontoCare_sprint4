@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="#{form.title}">Cadastro de Consulta</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <style>
+    .consulta-form-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .consulta-form-titulo {
+      color: #50b3ff;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #b0c4de;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .form-select, .form-input {
+      width: 100%;
+      padding: 12px;
+      background-color: #333;
+      border: 1px solid #555;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+    }
+
+    .form-select:focus, .form-input:focus {
+      outline: none;
+      border-color: #50b3ff;
+      box-shadow: 0 0 0 2px rgba(80, 179, 255, 0.3);
+    }
+
+    .btn-salvar {
+      width: 100%;
+      padding: 12px;
+      background-color: #50b3ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-salvar:hover {
+      background-color: #4092d8;
+    }
+
+    .btn-voltar {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #b0c4de;
+      text-decoration: none;
+    }
+
+    .btn-voltar:hover {
+      color: #50b3ff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<!-- Incluir a navegação -->
+<div th:replace="fragments/nav :: nav"></div>
+
+<div class="consulta-form-container">
+  <h1 class="consulta-form-titulo" th:text="#{form.title}">Cadastro de Consulta</h1>
+
+  <form th:action="@{/consultasView/salvar}" method="post" th:object="${consultaDTO}">
+    <div class="form-group">
+      <label class="form-label" for="dentistaId" th:text="#{form.dentist}">Escolha o Dentista</label>
+      <select class="form-select" id="dentistaId" name="dentistaId" th:field="*{dentistaId}">
+        <option th:each="dentista : ${dentistas}" th:value="${dentista.idDentista}" th:text="${dentista.nome}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="dataConsulta" th:text="#{form.date}">Data da Consulta</label>
+      <input class="form-input" type="datetime-local" id="dataConsulta" name="dataConsulta" th:field="*{dataConsulta}" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="pacienteId" th:text="#{form.patient}">Escolha o Paciente</label>
+      <select class="form-select" id="pacienteId" name="pacienteId" th:field="*{pacienteId}" required>
+        <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="status" th:text="#{form.status}">Status da Consulta</label>
+      <select class="form-select" id="status" name="status" th:field="*{status}" required>
+        <option value="AGENDADA" th:text="#{form.status.agendada}">Agendada</option>
+        <option value="REALIZADA" th:text="#{form.status.realizada}">Realizada</option>
+        <option value="CANCELADA" th:text="#{form.status.cancelada}">Cancelada</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-salvar" th:text="#{form.save}">Salvar Consulta</button>
+  </form>
+
+  <a href="/consultasView" class="btn-voltar" th:text="#{link.voltar}">Voltar à lista de consultas</a>
+</div>
+</body>
+</html>

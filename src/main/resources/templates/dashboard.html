@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="#{titulo.dashboard}">Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <style>
+  </style>
+</head>
+<body>
+
+<h1 th:text="#{titulo.dashboard}">Dashboard</h1>
+
+<p><span th:text="#{texto.total.pacientes}">Total de Pacientes:</span> <span th:text="${totalPacientes}"></span></p>
+<p><span th:text="#{texto.total.dentistas}">Total de Dentistas:</span> <span th:text="${totalDentistas}"></span></p>
+<p><span th:text="#{texto.total.consultas}">Total de Consultas:</span> <span th:text="${totalConsultas}"></span></p>
+
+<h2 th:text="#{titulo.consultas}">Consultas Cadastradas</h2>
+<table>
+  <thead>
+  <tr>
+    <th th:text="#{coluna.id}">ID</th>
+    <th th:text="#{coluna.data}">Data</th>
+    <th th:text="#{coluna.status}">Status</th>
+    <th th:text="#{coluna.paciente}">Paciente</th>
+    <th th:text="#{coluna.dentista}">Dentista</th>
+    <th th:text="#{coluna.acoes}">Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="consulta : ${consultas}">
+    <td th:text="${consulta.idConsulta}"></td>
+    <td th:text="${consulta.dataConsulta}"></td>
+    <td th:text="${consulta.status}"></td>
+    <td th:text="${consulta.paciente.nome}"></td>
+    <td th:text="${consulta.dentista.nome}"></td>
+    <td>
+      <a th:href="@{/consultasView/editar/{id}(id=${consulta.idConsulta})}" class="btn-editar" th:text="#{botao.editar}">Editar</a>
+      <form th:action="@{/dashboard/excluir/{id}(id=${consulta.idConsulta})}" method="post" style="display:inline;">
+        <button type="submit" class="btn-excluir" th:text="#{botao.excluir}"
+                th:onclick="'return confirm(\'' + #{confirmar.exclusao} + '\');'">
+          Excluir
+        </button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<a class="btn-nova-consulta" href="/consultasView/nova" th:text="#{botao.nova.consulta}">Nova Consulta</a>
+<div th:replace="fragments/nav :: nav"></div>
+</body>
+</html>

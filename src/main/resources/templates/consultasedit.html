@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{title}">Editar Consulta</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <style>
+    body {
+      background-color: #333333;
+      font-family: Arial, sans-serif;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #003366;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 16px;
+      color: #003366;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #003366;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #002244;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #003366;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      background-color: #002244;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1 th:text="#{title}">Editar Consulta</h1>
+
+
+<form th:action="@{/consultasView/editar/{id}(id=${consultaDTO.idConsulta})}" th:object="${consultaDTO}" method="post">
+
+  <input type="hidden" th:field="*{idConsulta}"/>
+
+  <label for="dataConsulta" th:text="#{dataConsulta}">Data da Consulta:</label>
+  <input type="datetime-local" id="dataConsulta" th:field="*{dataConsulta}" required/>
+
+  <label for="status" th:text="#{status}">Status:</label>
+  <select id="status" th:field="*{status}">
+    <option value="Pendente" th:selected="${consultaDTO.status == 'Pendente'}" th:text="#{pendente}">Pendente</option>
+    <option value="Confirmada" th:selected="${consultaDTO.status == 'Confirmada'}" th:text="#{confirmada}">Confirmada</option>
+    <option value="Cancelada" th:selected="${consultaDTO.status == 'Cancelada'}" th:text="#{cancelada}">Cancelada</option>
+    <option value="Agendada" th:selected="${consultaDTO.status == 'Agendada'}" th:text="#{agendada}">Agendada</option>
+  </select>
+
+  <label for="idDentista" th:text="#{dentista}">Dentista:</label>
+  <select id="idDentista" th:field="*{dentistaId}">
+    <option th:each="dentista : ${dentistas}" th:value="${dentista.idDentista}" th:text="${dentista.nome}"
+            th:selected="${consultaDTO.dentistaId == dentista.idDentista}"></option>
+  </select>
+
+  <label for="idPaciente" th:text="#{paciente}">Paciente:</label>
+  <select id="idPaciente" th:field="*{pacienteId}">
+    <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome}"
+            th:selected="${consultaDTO.pacienteId == paciente.id}"></option>
+  </select>
+
+  <button type="submit" th:text="#{salvar}">Salvar</button>
+
+</form>
+
+<br>
+<a href="/consultasView" th:text="#{voltar}">Voltar à lista de consultas</a>
+<div th:replace="fragments/nav :: nav"></div>
+
+
+</body>
+</html>

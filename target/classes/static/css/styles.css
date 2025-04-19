@@ -1,0 +1,190 @@
+
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+
+body {
+    background-color: #0A192F;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+
+h1 {
+    color: #64FFDA;
+    margin-bottom: 20px;
+}
+
+
+button, a.button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    display: inline-block;
+}
+
+button:hover, a.button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+    background: white;
+    color: black;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
+
+
+form {
+    background: white;
+    color: black;
+    padding: 20px;
+    width: 50%;
+    margin: auto;
+    border-radius: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.navbar {
+    background-color: #121212;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo a {
+    color: #50b3ff;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #50b3ff;
+}
+
+.language-selector {
+    margin-left: 25px;
+    color: #b0c4de;
+}
+
+.language-selector a {
+    margin-left: 5px;
+    color: #50b3ff;
+}
+
+.user-info {
+    margin-left: 25px;
+    color: #ffffff;
+    border-left: 1px solid #444;
+    padding-left: 25px;
+}
+/* Adicionar ao seu arquivo CSS */
+.btn-editar, .btn-excluir, .btn-nova-consulta {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-editar {
+  background-color: #4a6fa5;
+  color: white;
+  border: none;
+}
+
+.btn-editar:hover {
+  background-color: #3a5a80;
+}
+
+.btn-excluir {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  margin-left: 5px;
+}
+
+.btn-excluir:hover {
+  background-color: #c0392b;
+}
+
+.btn-nova-consulta {
+  background-color: #2ecc71;
+  color: white;
+  padding: 12px 20px;
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+  display: block;
+  width: 250px;
+  margin: 20px auto;
+}
+
+.btn-nova-consulta:hover {
+  background-color: #27ae60;
+}
+
+.btn-ia {
+    background-color: #8e44ad;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+.btn-ia:hover {
+    background-color: #732d91;
+}

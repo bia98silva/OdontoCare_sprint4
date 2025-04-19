@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{titulo.editar.consulta}">Editar Consulta</title>
+</head>
+<body>
+
+<h1 th:text="#{titulo.editar.consulta}">Editar Consulta</h1>
+
+<form th:action="@{/consultasView/atualizar}" th:object="${consulta}" method="post">
+
+    <label for="idConsulta" th:text="#{label.id.consulta}">ID da Consulta:</label>
+    <input type="text" id="idConsulta" name="idConsulta" th:value="${consulta.idConsulta}" readonly/>
+
+    <label for="dataConsulta" th:text="#{label.data.consulta}">Data da Consulta:</label>
+    <input type="datetime-local" id="dataConsulta" name="dataConsulta" th:value="${consulta.dataConsulta}" required/>
+
+    <label for="status" th:text="#{label.status}">Status:</label>
+    <select id="status" name="status">
+        <option value="Pendente" th:selected="${consulta.status == 'Pendente'}" th:text="#{status.pendente}">Pendente</option>
+        <option value="Confirmada" th:selected="${consulta.status == 'Confirmada'}" th:text="#{status.confirmada}">Confirmada</option>
+        <option value="Cancelada" th:selected="${consulta.status == 'Cancelada'}" th:text="#{status.cancelada}">Cancelada</option>
+        <option value="Agendada" th:selected="${consulta.status == 'Agendada'}" th:text="#{status.agendada}">Agendada</option>
+    </select>
+
+    <label for="idDentista" th:text="#{label.dentista}">Dentista:</label>
+    <select id="idDentista" name="idDentista">
+        <option th:each="dentista : ${dentistas}" th:value="${dentista.idDentista}"
+                th:text="${dentista.nome}"
+                th:selected="${consulta.dentista != null && consulta.dentista.idDentista == dentista.idDentista}">
+        </option>
+    </select>
+
+    <button type="submit" th:text="#{botao.salvar}">Salvar</button>
+</form>
+
+<a href="/consultasView" th:text="#{link.voltar}">Voltar à lista de consultas</a>
+<div th:replace="fragments/nav :: nav"></div>
+</body>
+</html>

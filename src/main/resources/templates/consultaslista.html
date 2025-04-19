@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{page.title}">Lista de Consultas</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      background-color: #222222;
+      font-family: Arial, sans-serif;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-top: 30px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #003366;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .actions a {
+      color: #003366;
+      text-decoration: none;
+      padding: 5px 10px;
+      border: 1px solid #003366;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .actions a:hover {
+      background-color: #003366;
+      color: white;
+    }
+
+    .button, .btn-voltar {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #003366;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover, .btn-voltar:hover {
+      background-color: #002244;
+    }
+
+  </style>
+</head>
+<body>
+
+<div th:replace="fragments/nav :: nav"></div>
+
+<div class="container">
+  <h1 th:text="#{page.title}">Lista de Consultas</h1>
+  <table>
+    <thead>
+    <tr>
+      <th th:text="#{table.id}">ID</th>
+      <th th:text="#{table.date}">Data</th>
+      <th th:text="#{table.status}">Status</th>
+      <th th:text="#{table.patient}">Paciente</th>
+      <th th:text="#{table.dentist}">Dentista</th>
+      <th th:text="#{table.actions}">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="consulta : ${consultas}">
+      <td th:text="${consulta.idConsulta}"></td>
+      <td th:text="${consulta.dataConsulta}"></td>
+      <td th:text="${consulta.status}"></td>
+      <td th:text="${consulta.paciente.nome}"></td>
+      <td th:text="${consulta.dentista.nome}"></td>
+      <td class="actions">
+        <a th:href="@{/consultasView/editar/{id}(id=${consulta.idConsulta})}" th:text="#{botao.editar}">Editar</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Botões estilizados -->
+  <a href="/consultasView/nova" class="button" th:text="#{button.new.consultation}">Nova Consulta</a>
+  <a href="/dashboard" class="btn-voltar" th:text="#{button.back.dashboard}">Voltar ao Dashboard</a>
+</div>
+</body>
+</html>
