@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{login.title}">Login - OdontoCare</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body {
+            background-color: #0A192F;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            max-width: 400px;
+            width: 90%;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #50b3ff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0c4de;
+            font-size: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #2d2d2d;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #50b3ff;
+            box-shadow: 0 0 0 2px rgba(80, 179, 255, 0.3);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #50b3ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: #4092d8;
+        }
+
+        .error-message {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-left: 4px solid #e74c3c;
+            color: #e74c3c;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .logout-message {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-left: 4px solid #2ecc71;
+            color: #2ecc71;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .language-selector {
+            margin-top: 20px;
+            text-align: center;
+            color: #b0c4de;
+        }
+
+        .language-selector a {
+            color: #50b3ff;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        .language-selector a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1 th:text="#{login.heading}">Login</h1>
+
+    <div th:if="${param.error}" class="error-message" th:text="#{login.error}">
+        Nome de usuário ou senha inválidos.
+    </div>
+
+    <div th:if="${param.logout}" class="logout-message" th:text="#{login.logout}">
+        Você foi desconectado.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="username" th:text="#{login.username}">Username:</label>
+            <input type="text" id="username" name="username" required autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="password" th:text="#{login.password}">Senha:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit" class="btn-login" th:text="#{login.button}">Entrar</button>
+    </form>
+
+    <div class="language-selector">
+        <span th:text="#{nav.language}">Idioma:</span>
+        <a th:href="@{/login?lang=pt_BR}">PT</a> |
+        <a th:href="@{/login?lang=en}">EN</a>
+    </div>
+</div>
+</body>
+</html>

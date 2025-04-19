@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<nav th:fragment="nav" class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a th:href="@{/dashboard}" th:text="#{app.title}">OdontoCare</a>
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/dashboard}" th:text="#{nav.dashboard}">Dashboard</a>
+            <a th:href="@{/consultasView}" th:text="#{nav.appointments}">Consultas</a>
+            <a th:href="@{/ia/dashboard}" th:text="#{nav.ai.analysis}">Análise IA</a>
+            <a th:href="@{/gerenciamento}" sec:authorize="hasRole('ADMIN')" th:text="#{nav.management}">Gerenciamento</a>
+
+            <div class="language-selector">
+                <span th:text="#{nav.language}">Idioma:</span>
+                <a th:href="@{?lang=pt_BR}">PT</a> |
+                <a th:href="@{?lang=en}">EN</a>
+            </div>
+
+            <div class="user-info" sec:authorize="isAuthenticated()">
+                <span sec:authentication="name"></span>
+                <a th:href="@{/logout}" th:text="#{nav.logout}">Sair</a>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

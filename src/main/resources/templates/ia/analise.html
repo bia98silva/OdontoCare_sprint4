@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Análise de IA - OdontoCare</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .ia-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .ia-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+        }
+
+        .ia-section h3 {
+            color: #50b3ff;
+            margin-bottom: 15px;
+        }
+
+        .ia-result {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            white-space: pre-line;
+            color: #e0e0e0;
+        }
+
+        .ia-input {
+            width: 100%;
+            height: 100px;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            display: none;
+            color: #b0c4de;
+            margin-top: 10px;
+        }
+
+        .patient-info {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .patient-info-item {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            background-color: #333;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .patient-info-item strong {
+            color: #50b3ff;
+        }
+    </style>
+</head>
+<body>
+<!-- Incluir a navegação -->
+<div th:replace="fragments/nav :: nav"></div>
+
+<div class="ia-container">
+    <h1>Análise de IA - Assistente Odontológico</h1>
+
+    <div class="patient-info">
+        <div class="patient-info-item">
+            <strong>Paciente:</strong> <span th:text="${paciente.nome}"></span>
+        </div>
+        <div class="patient-info-item">
+            <strong>CPF:</strong> <span th:text="${paciente.cpf}"></span>
+        </div>
+        <div class="patient-info-item">
+            <strong>Email:</strong> <span th:text="${paciente.email}"></span>
+        </div>
+        <div class="patient-info-item">
+            <strong>Telefone:</strong> <span th:text="${paciente.telefone}"></span>
+        </div>
+    </div>
+
+    <div class="ia-section">
+        <h3>Sugestões de Tratamento</h3>
+        <p>Com base no histórico do paciente, nosso assistente de IA pode sugerir possíveis tratamentos ou cuidados preventivos.</p>
+        <button id="btnSugestoes" class="btn-primary" th:data-paciente-id="${paciente.id}">Obter Sugestões</button>
+        <div id="loadingSugestoes" class="loading">Processando... Nosso assistente de IA está analisando os dados.</div>
+        <div id="resultadoSugestoes" class="ia-result"></div>
+    </div>
+
+    <div class="ia-section">
+        <h3>Análise de Sintomas</h3>
+        <p>Descreva os sintomas ou problemas odontológicos para receber uma análise preliminar:</p>
+        <textarea id="descricaoSintomas" class="ia-input" placeholder="Exemplo: Dor na região do molar superior direito, principalmente ao mastigar. Começou há 3 dias e parece estar piorando. Não há inchaço visível."></textarea>
+        <button id="btnAnalisarSintomas" class="btn-primary">Analisar Sintomas</button>
+        <div id="loadingAnalise" class="loading">Processando... Nosso assistente de IA está analisando os sintomas.</div>
+        <div id="resultadoAnalise" class="ia-result"></div>
+    </div>
+
+    <div class="disclaimer">
+        <p><strong>Aviso importante:</strong> As análises e sugestões fornecidas por este assistente de IA são apenas orientações preliminares e não substituem a avaliação e diagnóstico de um profissional de odontologia qualificado. Sempre consulte seu dentista para diagnósticos precisos e planos de tratamento.</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sugestões de tratamento
+        document.getElementById('btnSugestoes').addEventListener('click', function() {
+            const pacienteId = this.getAttribute('data-paciente-id');
+            const loadingElement = document.getElementById('loadingSugestoes');
+            const resultElement = document.getElementById('resultadoSugestoes');
+
+            loadingElement.style.display = 'block';
+            resultElement.innerHTML = '';
+
+            fetch(`/ia/sugestoes/${pacienteId}`)
+                .then(response => response.text())
+                .then(data => {
+                    resultElement.textContent = data;
+                    loadingElement.style.display = 'none';
+                })
+                .catch(error => {
+                    resultElement.textContent = 'Ocorreu um erro ao processar a solicitação: ' + error.message;
+                    loadingElement.style.display = 'none';
+                });
+        });
+
+        // Análise de sintomas
+        document.getElementById('btnAnalisarSintomas').addEventListener('click', function() {
+            const sintomas = document.getElementById('descricaoSintomas').value;
+            const loadingElement = document.getElementById('loadingAnalise');
+            const resultElement = document.getElementById('resultadoAnalise');
+
+            if (!sintomas.trim()) {
+                resultElement.textContent = 'Por favor, descreva os sintomas para análise.';
+                return;
+            }
+
+            loadingElement.style.display = 'block';
+            resultElement.innerHTML = '';
+
+            fetch('/ia/analise-sintomas', {
+                method: 'POST',
+                body: sintomas,
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                resultElement.textContent = data;
+                loadingElement.style.display = 'none';
+            })
+            .catch(error => {
+                resultElement.textContent = 'Ocorreu um erro ao processar a solicitação: ' + error.message;
+                loadingElement.style.display = 'none';
+            });
+        });
+    });
+</script>
+</body>
+</html>

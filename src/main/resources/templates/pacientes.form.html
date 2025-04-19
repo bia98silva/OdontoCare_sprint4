@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{form.title}">Cadastro de Consulta</title>
+    <style>
+        body {
+            background-color: #2d2d2d;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        h3 {
+            color: #50b3ff;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            color: #b0c4de;
+        }
+
+        select, input[type="text"], input[type="email"], input[type="date"], input[type="datetime-local"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: white;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="date"]:focus, input[type="datetime-local"]:focus {
+            outline: none;
+            border-color: #50b3ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #50b3ff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4092d8;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/consultasView/salvar}" method="post" th:object="${consultaDTO}" xmlns:th="http://www.w3.org/1999/xhtml">
+
+        <label for="dentistaId" th:text="#{form.dentist}">Escolha o Dentista</label>
+        <select id="dentistaId" name="dentistaId" th:field="*{dentistaId}">
+            <option th:each="dentista : ${dentistas}" th:value="${dentista.idDentista}" th:text="${dentista.nome}"></option>
+        </select>
+
+        <label for="dataConsulta" th:text="#{form.date}">Data da Consulta</label>
+        <input type="datetime-local" id="dataConsulta" name="dataConsulta" th:field="*{dataConsulta}" required>
+
+        <label for="pacienteId" th:text="#{form.patient}">Escolha o Paciente</label>
+        <select id="pacienteId" name="pacienteId" th:field="*{pacienteId}" required>
+            <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nome}"></option>
+        </select>
+
+        <label for="status" th:text="#{form.status}">Status da Consulta</label>
+        <select id="status" name="status" th:field="*{status}" required>
+            <option value="AGENDADA" th:text="#{form.status.agendada}">Agendada</option>
+            <option value="REALIZADA" th:text="#{form.status.realizada}">Realizada</option>
+            <option value="CANCELADA" th:text="#{form.status.cancelada}">Cancelada</option>
+        </select>
+
+        <button type="submit" th:text="#{form.save}">Salvar Consulta</button>
+    </form>
+</div>
+<div th:replace="fragments/nav :: nav"></div>
+</body>
+</html>

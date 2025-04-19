@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Análise de IA - OdontoCare</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            color: #50b3ff;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            color: #b0c4de;
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+
+        .risk-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+        }
+
+        .risk-section h2 {
+            color: #50b3ff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .risk-section p {
+            margin-bottom: 10px;
+            color: #ddd;
+        }
+
+        .risk-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .risk-list th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .risk-list td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            color: #ddd;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .badge-high {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .badge-medium {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .badge-low {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .view-details {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .view-details:hover {
+            background-color: #2980b9;
+        }
+
+        .no-patients {
+            text-align: center;
+            padding: 20px;
+            color: #b0c4de;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<!-- Incluir a navegação -->
+<div th:replace="fragments/nav :: nav"></div>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1 th:text="#{ai.analysis.title}">Análise de IA - Prevenção de Sinistros</h1>
+        <p th:text="#{ai.analysis.description}">Esta página exibe a análise de possíveis sinistros com base no número de consultas por paciente.</p>
+    </div>
+
+    <!-- Seção de Alto Risco -->
+    <div class="risk-section">
+        <h2 th:text="#{ai.analysis.high.risk}">Pacientes de Alto Risco (6+ consultas)</h2>
+        <p>Estes pacientes têm um histórico extenso de consultas e podem precisar de atenção especial.</p>
+
+        <table class="risk-list" th:if="${!altoRisco.empty}">
+            <thead>
+            <tr>
+                <th th:text="#{table.patient}">Nome do Paciente</th>
+                <th th:text="#{ai.analysis.patient.count}">Número de Consultas</th>
+                <th th:text="#{table.actions}">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="paciente : ${altoRisco}">
+                <td th:text="${paciente.nome}">Nome do Paciente</td>
+                <td>
+                    <span th:text="${paciente.consultas}" class="badge badge-high"></span>
+                </td>
+                <td>
+                    <a th:href="@{/ia/analise/{id}(id=${paciente.id})}" class="view-details" th:text="#{ai.analysis.view.details}">Ver Detalhes</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="no-patients" th:if="${altoRisco.empty}">
+            Nenhum paciente de alto risco encontrado.
+        </div>
+    </div>
+
+    <!-- Seção de Médio Risco -->
+    <div class="risk-section">
+        <h2 th:text="#{ai.analysis.medium.risk}">Pacientes de Médio Risco (3-5 consultas)</h2>
+        <p>Estes pacientes têm um número moderado de consultas e merecem acompanhamento.</p>
+
+        <table class="risk-list" th:if="${!medioRisco.empty}">
+            <thead>
+            <tr>
+                <th>Nome do Paciente</th>
+                <th>Número de Consultas</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="paciente : ${medioRisco}">
+                <td th:text="${paciente.nome}">Nome do Paciente</td>
+                <td>
+                    <span th:text="${paciente.consultas}" class="badge badge-medium"></span>
+                </td>
+                <td>
+                    <a th:href="@{/ia/analise/{id}(id=${paciente.id})}" class="view-details">Ver Detalhes</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="no-patients" th:if="${medioRisco.empty}">
+            Nenhum paciente de médio risco encontrado.
+        </div>
+    </div>
+
+    <!-- Seção de Baixo Risco -->
+    <div class="risk-section">
+        <h2 th:text="#{ai.analysis.low.risk}">Pacientes de Baixo Risco (1-2 consultas)</h2>
+        <p>Estes pacientes têm poucas consultas registradas e apresentam baixo risco de sinistros.</p>
+
+        <table class="risk-list" th:if="${!baixoRisco.empty}">
+            <thead>
+            <tr>
+                <th>Nome do Paciente</th>
+                <th>Número de Consultas</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="paciente : ${baixoRisco}">
+                <td th:text="${paciente.nome}">Nome do Paciente</td>
+                <td>
+                    <span th:text="${paciente.consultas}" class="badge badge-low"></span>
+                </td>
+                <td>
+                    <a th:href="@{/ia/analise/{id}(id=${paciente.id})}" class="view-details">Ver Detalhes</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="no-patients" th:if="${baixoRisco.empty}">
+            Nenhum paciente de baixo risco encontrado.
+        </div>
+    </div>
+</div>
+</body>
+</html>
