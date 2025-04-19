@@ -69,6 +69,7 @@ Este módulo representa uma inovação significativa na gestão de riscos em cl�
 
 ## 📂 Estrutura do Projeto
 
+```text
 odonto-care
 ├── src
 │   └── main
@@ -140,6 +141,8 @@ Análise detalhada de paciente com recomendações de IA
 
 ###  **Diagrama do projeto**
 ![diagrama](https://github.com/bia98silva/OdontoCare_sprint4/blob/main/img/Devops.drawio.png)
+
+### Link do video: https://youtu.be/slEiC_k-vsY
 
 ### Pré-requisitos
 
