@@ -1,4 +1,4 @@
- 🦷 OdontoCare: Sistema de Gerenciamento Odontológico
+# 🦷 OdontoCare: Sistema de Gerenciamento Odontológico
 
 ## 🔍 Visão Geral
 
