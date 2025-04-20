@@ -28,6 +28,17 @@ OdontoCare é um sistema completo de gerenciamento para clínicas odontológicas
 - **IA**: Integração com OpenAI para análise preditiva  
 - **Internacionalização**: ResourceBundle e Mensagens Localizadas
 
+## 📩 Configuração de recursos de mensageria
+
+O OdontoCare implementa um sistema robusto de notificações baseado no padrão de mensageria produtor/consumidor utilizando Apache ActiveMQ. A configuração está estruturada em:
+
+JmsConfig.java: Configura o broker ActiveMQ, JmsTemplate e o container de listener
+NotificacaoService.java: Atua como produtor, enviando mensagens para a fila "fila.notificacoes"
+NotificacaoConsumer.java: Consumidor que processa as mensagens recebidas da fila
+NotificacaoDTO.java: Estrutura de dados para as notificações
+
+Este sistema permite o envio assíncrono de notificações por e-mail para confirmação, atualização e cancelamento de consultas, sem bloquear o fluxo principal da aplicação. Cada operação relevante do ConsultaService gera automaticamente as notificações apropriadas, que são processadas de forma independente pelo consumidor.
+
 ## 🔒 Sistema de Segurança e Perfis de Usuário
 
 O **OdontoCare** implementa um robusto sistema de segurança baseado em **Spring Security**, com autenticação, autorização e controle de acesso por **perfis de usuário**. O sistema possui três níveis de acesso pré-configurados:
