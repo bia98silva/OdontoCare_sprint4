@@ -95,7 +95,7 @@ odonto-care
 │       │       ├── repository      - Interfaces JPA
 │       │       └── service         - Lógica de negócio
 │       └── resources
-│           ├── static             - Recursos estáticos (CSS, JS, imagens)
+│           ├── static             - Recursos estáticos (CSS, imagens)
 │           ├── templates
 │           │   ├── fragments      - Fragments Thymeleaf reutilizáveis
 │           │   ├── ia             - Páginas do módulo de IA
