@@ -19,7 +19,7 @@ OdontoCare é um sistema completo de gerenciamento para clínicas odontológicas
 ## 🔧 Tecnologias Utilizadas
 
 - **Backend**: Java 17, Spring Boot 3.2  
-- **Frontend**: Thymeleaf, HTML5, CSS3, JavaScript  
+- **Frontend**: Thymeleaf, CSS3, 
 - **Banco de Dados**: Oracle Database  
 - **Segurança**: Spring Security  
 - **Persistência**: JPA/Hibernate  
